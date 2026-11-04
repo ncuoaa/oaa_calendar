@@ -1,7 +1,9 @@
 """Local-only account setup UI; this port is never exposed by the public tunnel."""
 
 import json
+import os
 import secrets
+import shutil
 import subprocess
 import threading
 import webbrowser
@@ -53,7 +55,11 @@ class Handler(BaseHTTPRequestHandler):
         encrypted = json.dumps({'WEB_USERNAME':username, 'WEB_PASSWORD_HASH':hash_password(password)})
         Path('.local').mkdir(exist_ok=True)
         command = "$value=[Console]::In.ReadToEnd(); ConvertTo-SecureString -String $value -AsPlainText -Force | Export-Clixml -LiteralPath '.local/web-access.xml'"
-        result = subprocess.run(['powershell', '-NoProfile', '-NonInteractive', '-Command', command], input=encrypted, text=True, capture_output=True)
+        shell = shutil.which('pwsh') or shutil.which('powershell') or str(Path(os.environ.get('SystemRoot', 'C:/Windows')) / 'System32/WindowsPowerShell/v1.0/powershell.exe')
+        try:
+            result = subprocess.run([shell, '-NoProfile', '-NonInteractive', '-Command', command], input=encrypted, text=True, capture_output=True, timeout=30)
+        except (OSError, subprocess.SubprocessError):
+            return self.respond(500, '無法執行本機加密儲存，請通知管理者後重新設定。')
         if result.returncode:
             return self.respond(500, '儲存失敗，請通知管理者。')
         self.respond(200, '帳密已加密儲存。可以關閉此頁，並回到對話告知「設定完成」。')
