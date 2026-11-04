@@ -1,4 +1,4 @@
-# 主管共同空檔查詢 API
+# 教務處主管行程查詢 API
 
 ## GitHub Pages 固定查詢頁
 
@@ -72,3 +72,4 @@ uvicorn main:app --host 127.0.0.1 --port 8080 --reload
 網站以後端驗證帳密，登入狀態有效 8 小時，使用分頁的 sessionStorage 保存隨機權杖。登出會在後端撤銷權杖；API 重新啟動會清除所有登入狀態。未設定帳密時拒絕登入與查詢。每分鐘最多接受 20 次登入嘗試。部署容器時需注入 `WEB_USERNAME` 與 `WEB_PASSWORD_HASH`，不應在映像檔內寫入。
 
 GitHub Pages 的靜態 HTML 與程式碼仍可公開下載；登入限制保護查詢操作及後端日曆資料。
+
