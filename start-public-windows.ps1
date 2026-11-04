@@ -15,8 +15,12 @@ try {
         Start-Sleep -Milliseconds 500
     }
     if (-not $publicOrigin) { throw 'No public URL was created. Check .local\tunnel-errors.log.' }
-    $env:ALLOWED_ORIGINS = 'https://december-2026-availability.oaaailab-6179.chatgpt.site,' + $publicOrigin
+    $env:ALLOWED_ORIGINS = 'https://december-2026-availability.oaaailab-6179.chatgpt.site,https://magilin-66.github.io,' + $publicOrigin
     Set-Content -LiteralPath '.local\public-url.txt' -Value ($publicOrigin + '/availability') -Encoding utf8
+    if (Test-Path -LiteralPath 'docs') {
+        @{ baseUrl = $publicOrigin } | ConvertTo-Json | Set-Content -LiteralPath 'docs\api-config.json' -Encoding utf8
+        Write-Host 'Updated docs/api-config.json locally. Commit and push it to update the GitHub Pages API address.'
+    }
     Write-Host ('Temporary public page: ' + $publicOrigin + '/availability')
     Write-Host 'Keep this computer awake and this process running. Restarting creates a different public URL.'
     & .\start-windows.ps1

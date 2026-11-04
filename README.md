@@ -1,5 +1,13 @@
 # 主管共同空檔查詢 API
 
+## GitHub Pages 固定查詢頁
+
+網址為 https://magilin-66.github.io/oaa_calendar/ 。Pages 的發布來源設為 `main` 分支的 `/docs`，提供免登入的查詢介面。GitHub Pages 不執行 Python，頁面透過 `docs/api-config.json` 指定的 HTTPS API 讀取即時結果，OAuth 憑證留在 Windows 主機。
+
+目前後端使用臨時 Cloudflare Tunnel。Windows 必須保持開機、不休眠，API 與 Tunnel 也必須持續執行。Tunnel 重新啟動後，要更新 `docs/api-config.json` 的 `baseUrl` 並推送到 GitHub；頁面固定網址不變。要讓後端位址也固定，需另設定固定 HTTPS 網域或 Named Tunnel。
+
+修改介面時同步更新 `static/availability.html` 與 `docs/index.html`。
+
 唯讀 Python API，使用 Google Calendar FreeBusy API 回傳忙碌區間，不讀取活動名稱或內容，也沒有建立、修改或刪除活動的端點。
 
 ## 端點

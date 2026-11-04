@@ -32,7 +32,7 @@ GOOGLE_FREEBUSY_URL = "https://www.googleapis.com/calendar/v3/freeBusy"
 app = FastAPI(title="主管共同空檔查詢 API", version="1.0.0")
 origins = [x.strip().rstrip("/") for x in os.getenv(
     "ALLOWED_ORIGINS",
-    "https://december-2026-availability.oaaailab-6179.chatgpt.site",
+    "https://december-2026-availability.oaaailab-6179.chatgpt.site,https://magilin-66.github.io",
 ).split(",") if x.strip()]
 app.add_middleware(
     CORSMiddleware,
