@@ -16,6 +16,7 @@ from fastapi.exceptions import RequestValidationError
 from google.auth.transport.requests import Request as GoogleAuthRequest
 from google.oauth2.credentials import Credentials
 from pydantic import BaseModel, Field, field_validator, model_validator
+from access_auth import login, logout, require_session
 
 TZ = ZoneInfo("Asia/Taipei")
 SCOPES = ["https://www.googleapis.com/auth/calendar.freebusy"]
@@ -38,7 +39,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type"],
+    allow_headers=["Content-Type", "Authorization"],
     max_age=600,
 )
 
@@ -90,6 +91,31 @@ class AvailabilityRequest(BaseModel):
         return self
 
 
+class LoginRequest(BaseModel):
+    username: str = Field(min_length=1, max_length=100)
+    password: str = Field(min_length=1, max_length=256)
+
+
+@app.post('/api/login')
+def sign_in(body: LoginRequest, request: Request):
+    origin = request.headers.get('origin')
+    if origin and origin.rstrip('/') not in origins:
+        raise HTTPException(403, '來源網址未獲允許。')
+    return {'status': 'success', 'token': login(body.username, body.password)}
+
+
+@app.get('/api/session')
+def session_status(request: Request):
+    require_session(request)
+    return {'status': 'success'}
+
+
+@app.post('/api/logout')
+def sign_out(request: Request):
+    logout(request)
+    return {'status': 'success'}
+
+
 def credentials() -> Credentials:
     client_id = os.getenv("GOOGLE_OAUTH_CLIENT_ID")
     client_secret = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET")
@@ -118,6 +144,7 @@ def health() -> dict[str, str]:
 
 @app.post("/api/freebusy")
 def freebusy(body: AvailabilityRequest, request: Request) -> dict:
+    require_session(request)
     origin = request.headers.get("origin")
     if origin and origin.rstrip("/") not in origins:
         raise HTTPException(status_code=403, detail="來源網址未獲允許。")

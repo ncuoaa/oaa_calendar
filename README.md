@@ -2,7 +2,7 @@
 
 ## GitHub Pages 固定查詢頁
 
-網址為 https://magilin-66.github.io/oaa_calendar/ 。Pages 的發布來源設為 `main` 分支的 `/docs`，提供免登入的查詢介面。GitHub Pages 不執行 Python，頁面透過 `docs/api-config.json` 指定的 HTTPS API 讀取即時結果，OAuth 憑證留在 Windows 主機。
+網址為 https://magilin-66.github.io/oaa_calendar/ 。Pages 的發布來源設為 `main` 分支的 `/docs`，提供登入後使用的查詢介面。GitHub Pages 不執行 Python，頁面透過 `docs/api-config.json` 指定的 HTTPS API 讀取即時結果，OAuth 憑證留在 Windows 主機。
 
 目前後端使用臨時 Cloudflare Tunnel。Windows 必須保持開機、不休眠，API 與 Tunnel 也必須持續執行。Tunnel 重新啟動後，要更新 `docs/api-config.json` 的 `baseUrl` 並推送到 GitHub；頁面固定網址不變。要讓後端位址也固定，需另設定固定 HTTPS 網域或 Named Tunnel。
 
@@ -29,7 +29,7 @@
 4. 授權帳號必須具有所有主管日曆的忙碌／空閒查看權限。
 5. 將輸出的 `GOOGLE_OAUTH_CLIENT_ID`、`GOOGLE_OAUTH_CLIENT_SECRET`、`GOOGLE_OAUTH_REFRESH_TOKEN` 設為託管服務的 Secret 環境變數。不要放進原始碼、前端 JavaScript、Git 或一般文字檔。
 
-公開訪客不需要 Google 或 ChatGPT 登入，但任何取得網站網址的人都能查詢這些帳號的忙碌／空閒資料。
+訪客使用管理者設定的網站帳密登入，不需連接個人的 Google 或 ChatGPT 帳號；API 會驗證登入狀態後才查詢行事曆。
 
 ## 本機執行
 
@@ -63,3 +63,12 @@ uvicorn main:app --host 127.0.0.1 --port 8080 --reload
 從此資料夾建置容器並部署至 Cloud Run；服務需允許 unauthenticated invocation，並把三個 OAuth 值設為 Secret Manager 綁定的環境變數。正式環境的 `ALLOWED_ORIGINS` 只保留目前網站網址。部署後將 API base URL 設定到網站端，再把網站後端切換至此服務。
 
 開放匿名呼叫的 API 會消耗 Google API 配額。正式公開前應在 Cloud Run/API Gateway 加上配額或速率限制；CORS 是瀏覽器政策，不是 API 身分驗證。
+
+
+## 網站帳密設定
+
+在 Windows 主機執行 `.\.venv\Scripts\python.exe setup_access.py`，使用 `.local/access-setup-url.txt` 內的本機網址設定帳號密碼。設定頁僅監聽本機獨立連接埠，不經公開 Tunnel。密碼至少 12 個字元，儲存 PBKDF2-SHA256 雜湊，並以 Windows DPAPI 加密保存在 `.local/web-access.xml`。設定後重新啟動 API；此檔案不應上傳 GitHub。
+
+網站以後端驗證帳密，登入狀態有效 8 小時，使用分頁的 sessionStorage 保存隨機權杖。登出會在後端撤銷權杖；API 重新啟動會清除所有登入狀態。未設定帳密時拒絕登入與查詢。每分鐘最多接受 20 次登入嘗試。部署容器時需注入 `WEB_USERNAME` 與 `WEB_PASSWORD_HASH`，不應在映像檔內寫入。
+
+GitHub Pages 的靜態 HTML 與程式碼仍可公開下載；登入限制保護查詢操作及後端日曆資料。
