@@ -15,7 +15,7 @@ try {
         Start-Sleep -Milliseconds 500
     }
     if (-not $publicOrigin) { throw 'No public URL was created. Check .local\tunnel-errors.log.' }
-    $env:ALLOWED_ORIGINS = 'https://december-2026-availability.oaaailab-6179.chatgpt.site,https://magilin-66.github.io,' + $publicOrigin
+    $env:ALLOWED_ORIGINS = 'https://december-2026-availability.oaaailab-6179.chatgpt.site,https://ncuoaa.github.io,' + $publicOrigin
     Set-Content -LiteralPath '.local\public-url.txt' -Value ($publicOrigin + '/availability') -Encoding utf8
     if (Test-Path -LiteralPath 'docs') {
         @{ baseUrl = $publicOrigin } | ConvertTo-Json | Set-Content -LiteralPath 'docs\api-config.json' -Encoding utf8
@@ -28,3 +28,4 @@ try {
     $env:ALLOWED_ORIGINS = $previousOrigins
     if (-not $tunnelProcess.HasExited) { Stop-Process -Id $tunnelProcess.Id }
 }
+

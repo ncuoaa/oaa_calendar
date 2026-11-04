@@ -2,7 +2,7 @@
 
 ## GitHub Pages 固定查詢頁
 
-網址為 https://magilin-66.github.io/oaa_calendar/ 。Pages 的發布來源設為 `main` 分支的 `/docs`，提供登入後使用的查詢介面。GitHub Pages 不執行 Python，頁面透過 `docs/api-config.json` 指定的 HTTPS API 讀取即時結果，OAuth 憑證留在 Windows 主機。
+網址為 https://ncuoaa.github.io/oaa_calendar/ 。Pages 的發布來源設為 `main` 分支的 `/docs`，提供登入後使用的查詢介面。GitHub Pages 不執行 Python，頁面透過 `docs/api-config.json` 指定的 HTTPS API 讀取即時結果，OAuth 憑證留在 Windows 主機。
 
 目前後端使用臨時 Cloudflare Tunnel。Windows 必須保持開機、不休眠，API 與 Tunnel 也必須持續執行。Tunnel 重新啟動後，要更新 `docs/api-config.json` 的 `baseUrl` 並推送到 GitHub；頁面固定網址不變。要讓後端位址也固定，需另設定固定 HTTPS 網域或 Named Tunnel。
 
@@ -72,4 +72,5 @@ uvicorn main:app --host 127.0.0.1 --port 8080 --reload
 網站以後端驗證帳密，登入狀態有效 8 小時，使用分頁的 sessionStorage 保存隨機權杖。登出會在後端撤銷權杖；API 重新啟動會清除所有登入狀態。未設定帳密時拒絕登入與查詢。每分鐘最多接受 20 次登入嘗試。部署容器時需注入 `WEB_USERNAME` 與 `WEB_PASSWORD_HASH`，不應在映像檔內寫入。
 
 GitHub Pages 的靜態 HTML 與程式碼仍可公開下載；登入限制保護查詢操作及後端日曆資料。
+
 
