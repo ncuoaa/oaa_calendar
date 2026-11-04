@@ -10,7 +10,7 @@
 <body>
 <section id="loginScreen" class="wrap"><div class="card login-card"><div class="eyebrow">教務處主管行程查詢</div><h1>登入查詢</h1><p>請輸入管理者提供的帳號密碼。</p><form id="loginForm"><label for="loginUser">帳號</label><input id="loginUser" autocomplete="username" required maxlength="100"><label for="loginPassword">密碼</label><input id="loginPassword" type="password" autocomplete="current-password" required maxlength="256"><button class="button primary" id="loginButton">登入</button><p class="login-error" id="loginMessage" role="alert"></p></form></div></section>
 <main class="wrap" id="queryApp" hidden><div style="text-align:right"><button class="button" id="logoutButton" type="button">登出</button></div>
-<header class="hero"><div><div class="eyebrow">Calendar coordination · Taipei time</div><h1>教務處主管行程查詢</h1><p>選擇一位或多位主管，設定任意日期區間、每日時段和最少連續空檔長度。按下查詢後即時讀取 Google Calendar。</p></div><div class="pill">可調整查詢條件</div></header>
+<header class="hero"><div><div class="eyebrow">Calendar coordination · Taipei time</div><h1>教務處主管行程查詢</h1><div class="contact-note" style="margin:16px 0;padding:14px 16px;border-left:3px solid var(--green);background:var(--mint);border-radius:8px"><p style="color:var(--ink)">教務長及副教務長的行程確認及建檔，可洽：子寧(57104)、秘書(57101)、慧甄(57100)。</p><p style="color:var(--ink);margin-top:8px">含各組主管與會的行程確認及建檔，必須洽：秘書(57101)。</p></div><p>選擇一位或多位主管，設定任意日期區間、每日時段和最少連續空檔長度。按下查詢後即時讀取 Google Calendar。</p></div><div class="pill">可調整查詢條件</div></header>
 <section class="card"><h2>選擇比對對象</h2><div class="people" id="people"></div><div class="actions"><button class="button" id="selectAll" type="button">選取全部</button><button class="button" id="clearAll" type="button">清除選取</button><span class="helper" id="selectionCount" aria-live="polite"></span></div></section>
 <section class="card"><h2>設定時間條件</h2><div class="controls">
 <div class="field"><label for="from">開始日期</label><input id="from" type="date" value=""></div><div class="field"><label for="to">結束日期</label><input id="to" type="date" value=""></div><div class="field"><label for="start">每日開始時間</label><input id="start" type="time" value="08:00"></div><div class="field"><label for="end">每日結束時間</label><input id="end" type="time" value="17:00"></div><div class="field"><label for="duration">至少連續空檔（小時）</label><input id="duration" type="number" min="0.5" max="24" step="0.5" value="4"></div><label class="toggle"><input id="weekdays" type="checkbox" checked> 工作日（週一至週五）</label><label class="toggle"><input id="holidays" type="checkbox"> 其他（假日）</label>
@@ -50,6 +50,7 @@ $('#logoutButton').addEventListener('click',async()=>{const token=sessionStorage
 
 </script>
 </body></html>
+
 
 
 
