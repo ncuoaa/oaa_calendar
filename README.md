@@ -1,5 +1,23 @@
 # 教務處主管行程查詢 API
 
+## Windows 自動啟動與故障恢復
+
+完成 Google OAuth 與網站帳密設定後，在實際執行服務的目錄執行 `./install-autostart-windows.ps1`。它建立「OAA Calendar Service」排程，在同一個 Windows 使用者登入後自動啟動，並每分鐘確認監控程式仍在執行。API 與連線程式由獨立背景程序執行，不依賴 Codex 或終端視窗保持開啟。
+
+`service_supervisor.py` 每 10 秒檢查程序及本機 API，失敗時重啟；公開 HTTPS 健康檢查正常後每 5 分鐘執行一次，以減少免費連線額度消耗。公開連線持續失敗會重新連線。程序異常結束時，排程會嘗試恢復監控；它以程序啟動時間及執行檔核對自己管理的舊程序。狀態與輪替紀錄保存在 `.local/service-status.json`、`.local/service.log`。
+
+尚未設定固定網域時會暫用 Cloudflare Quick Tunnel。網址改變後，監控程式使用此 Windows 使用者既有的 GitHub Credential Manager 授權，只更新儲存庫 `docs/api-config.json`，不提交本機憑證或其他工作檔案。Pages 發布需要時間，重新連線期間可能暫時無法登入。
+
+此排程使用登入中的使用者權限，以便解密原有 DPAPI 憑證；它不是開機後、尚未登入 Windows 就能運作的系統服務。電腦關機或休眠期間無法提供查詢。停用方式：先 `Disable-ScheduledTask -TaskName 'OAA Calendar Service'`，再於服務目錄建立 `.local/stop-service.flag`，監控程式會停止自己管理的程序。重新啟用時移除此旗標、啟用並啟動該排程。
+
+## 無自有網域的固定 API 網址
+
+ngrok 免費帳號提供固定開發網域。從 ngrok 控制台取得自己的 dev domain 與 Authtoken，安裝 Microsoft Store 的官方 ngrok（直接下載版可能被 Windows 防護阻擋）。不要將 Authtoken 貼入對話或 GitHub 原始碼。
+
+執行 `.\.venv\Scripts\python.exe setup_tunnel.py`，開啟 `.local/tunnel-setup-url.txt` 指向的本機設定頁，填寫 `https://你的網域.ngrok-free.dev` 及 Authtoken。程式將兩者以 Windows DPAPI 加密儲存於 `.local/ngrok-auth.xml`；監控服務偵測後會切換固定連線並更新 Pages 設定。監控程式不會選購或升級任何方案，免費服務仍受 ngrok 用量限制。
+
+固定網址設定不會把 Google OAuth 憑證、網站密碼或 ngrok 權杖上傳到前端。網站帳密驗證與日曆讀取仍由 Windows API 執行。免費連線的瀏覽器提示由前端 API 請求的官方支援標頭處理，後端 CORS 限定 Pages 來源。
+
 ## GitHub Pages 固定查詢頁
 
 網址為 https://ncuoaa.github.io/oaa_calendar/ 。Pages 的發布來源設為 `main` 分支的 `/docs`，提供登入後使用的查詢介面。GitHub Pages 不執行 Python，頁面透過 `docs/api-config.json` 指定的 HTTPS API 讀取即時結果，OAuth 憑證留在 Windows 主機。
