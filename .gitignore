@@ -7,3 +7,6 @@ __pycache__/
 *.pyc
 .env*
 !.env.example
+.clasprc.json
+.clasp.json
+apps-script/.clasp.json

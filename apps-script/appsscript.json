@@ -1,0 +1,12 @@
+{
+  "timeZone": "Asia/Taipei",
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {"userSymbol": "Calendar", "serviceId": "calendar", "version": "v3"}
+    ]
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "oauthScopes": ["https://www.googleapis.com/auth/calendar.events.freebusy"],
+  "webapp": {"executeAs": "USER_DEPLOYING", "access": "ANYONE_ANONYMOUS"}
+}

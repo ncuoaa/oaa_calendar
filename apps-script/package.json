@@ -1,0 +1,7 @@
+{
+  "name": "oaa-calendar-apps-script",
+  "private": true,
+  "type": "module",
+  "scripts": {"build:crypto": "node tools/build-crypto.mjs", "test": "node tests/run.mjs"},
+  "devDependencies": {"@noble/hashes": "2.4.0", "esbuild": "0.28.2"}
+}

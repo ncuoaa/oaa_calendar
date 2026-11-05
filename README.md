@@ -1,5 +1,7 @@
 # 教務處主管行程查詢 API
 
+Apps Script 雲端試行版與設定流程請見 [apps-script/README.md](apps-script/README.md)。目前與原有 Python 服務並存，待雲端部署與實際查詢驗證後再切換正式入口。
+
 ## Windows 自動啟動與故障恢復
 
 完成 Google OAuth 與網站帳密設定後，在實際執行服務的目錄執行 `./install-autostart-windows.ps1`。它建立「OAA Calendar Service」排程，在同一個 Windows 使用者登入後自動啟動，並每分鐘確認監控程式仍在執行。API 與連線程式由獨立背景程序執行，不依賴 Codex 或終端視窗保持開啟。
