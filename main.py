@@ -23,7 +23,7 @@ SCOPES = ["https://www.googleapis.com/auth/calendar.freebusy"]
 PEOPLE = {
     "dean": {"title": "教務長", "calendar_id": "deanoaa2018@gmail.com", "email": "deanoaa2018@gmail.com"},
     "deputy": {"title": "副教務長", "calendar_id": "oaancu2017@gmail.com", "email": "oaancu2017@gmail.com"},
-    "registrar": {"title": "註冊組長", "calendar_id": "teyuan@gmail.com", "email": "teyuan@gmail.com"},
+    "registrar": {"title": "註冊組長", "calendar_id": "uk56hs13bgj775u2s9n8gf0i9k@group.calendar.google.com", "email": "uk56hs13bgj775u2s9n8gf0i9k@group.calendar.google.com"},
     "course": {"title": "課務組長", "calendar_id": "bkchang@g.ncu.edu.tw", "email": "bkchang@g.ncu.edu.tw"},
     "development": {"title": "教發中心主任", "calendar_id": "ziyang.ccu@gmail.com", "email": "ziyang.ccu@gmail.com"},
     "admissions": {"title": "招生組長", "calendar_id": "takee1016@gmail.com", "email": "takee1016@gmail.com"},
@@ -269,4 +269,5 @@ def availability(body: CommonAvailabilityRequest, request: Request):
     data = freebusy(body, request)
     rows = calculate_rows(body, data["calendars"])
     return {"status": "success", "rows": rows, "count": len(rows)}
+
 

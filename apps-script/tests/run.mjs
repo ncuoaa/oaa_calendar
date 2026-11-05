@@ -51,6 +51,9 @@ assert.equal(context.rows_(criteria,[]).length,0,'Known holiday/weekend excluded
 criteria=context.criteria_({...base,dateStart:'2026-12-25',dateEnd:'2026-12-26',workdays:false,holidays:true});
 assert.equal(context.rows_(criteria,[]).length,2,'Holiday option includes known holiday/weekend');
 criteria=context.criteria_(base);
+const registrarCriteria=context.criteria_({...base,selected:['registrar'],dateStart:'2026-12-03',dateEnd:'2026-12-03',minimumMinutes:180});
+assert.equal(registrarCriteria.accounts[0].calendarId,'uk56hs13bgj775u2s9n8gf0i9k@group.calendar.google.com');
+assert.deepEqual([...context.rows_(registrarCriteria,[['2026-12-03T10:00:00+08:00','2026-12-03T12:00:00+08:00'],['2026-12-03T15:00:00+08:00','2026-12-03T18:00:00+08:00']].map(w=>w.map(Date.parse)))[0].slots],['12:00–15:00'],'Registrar shared-calendar regression');
 assert.equal(context.rows_(criteria,[[Date.parse('2026-11-30T22:00:00Z'),Date.parse('2026-12-01T01:00:00Z')],[Date.parse('2026-12-01T05:00:00Z'),Date.parse('2026-12-01T10:00:00Z')]])[0].slots[0],'09:00–13:00');
 assert.equal(context.apiLogout({token}).status,'success');assert.equal(context.apiSession({token}).code,401);
 const expiring=context.apiLogin({username:'test-only-user',password});
