@@ -1,6 +1,10 @@
 # 教務處主管行程查詢：Apps Script 試行版
 
-此資料夾是 Google 雲端執行版本。它不依賴本機 Python、ngrok 或 Cloudflare Tunnel。原有 Python 與 GitHub Pages 仍是現行服務，試行版驗證通過前不切換正式入口。
+此資料夾是 Google 雲端執行版本。使用者驗收第 2 版後，2026-11-05 將原公告入口 https://ncuoaa.github.io/oaa_calendar/ 改為導向此部署。它不依賴本機 Python、ngrok 或 Cloudflare Tunnel。
+
+正式部署網址：https://script.google.com/macros/s/AKfycbzeHW9JeebQSq0qacA5WhFubpIKiO4MyXPHgDkigvO1cwiVPvdr68Emkm5K7FCFY6cw/exec
+
+維護時更新此部署的版本，保留部署 ID，避免既有入口失效。GitHub 上傳原始碼不會自動更新 Apps Script 部署；須完成 clasp push 與對同一 ID 的部署更新。`docs/index.html` 僅為入口轉址頁，不再作為 Python 查詢介面。
 
 ## 功能與資料
 

@@ -1,6 +1,6 @@
 # 教務處主管行程查詢 API
 
-Apps Script 雲端試行版與設定流程請見 [apps-script/README.md](apps-script/README.md)。目前與原有 Python 服務並存，待雲端部署與實際查詢驗證後再切換正式入口。
+正式入口 https://ncuoaa.github.io/oaa_calendar/ 已於 2026-11-05 切換為導向 Google Apps Script 第 2 版，使用原有網站帳密登入。此版本不依賴 Windows、Python 或 Tunnel 持續執行。雲端程式與維護流程請見 [apps-script/README.md](apps-script/README.md)。下方 Python 與 Tunnel 說明保留作歷史版本及回復參考。
 
 ## Windows 自動啟動與故障恢復
 
