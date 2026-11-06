@@ -26,7 +26,7 @@ PEOPLE = {
     "registrar": {"title": "註冊組長", "calendar_id": "uk56hs13bgj775u2s9n8gf0i9k@group.calendar.google.com", "email": "uk56hs13bgj775u2s9n8gf0i9k@group.calendar.google.com"},
     "course": {"title": "課務組長", "calendar_id": "bkchang@g.ncu.edu.tw", "email": "bkchang@g.ncu.edu.tw"},
     "development": {"title": "教發中心主任", "calendar_id": "ziyang.ccu@gmail.com", "email": "ziyang.ccu@gmail.com"},
-    "admissions": {"title": "招生組長", "calendar_id": "takee1016@gmail.com", "email": "takee1016@gmail.com"},
+    "admissions": {"title": "招生組長", "calendar_id": "yswadmission@gmail.com", "email": "yswadmission@gmail.com"},
 }
 GOOGLE_FREEBUSY_URL = "https://www.googleapis.com/calendar/v3/freeBusy"
 

@@ -15,7 +15,7 @@ const DEFAULT_CONFIG_ = {
     {id:'registrar',title:'註冊組長',calendarId:'uk56hs13bgj775u2s9n8gf0i9k@group.calendar.google.com',email:'uk56hs13bgj775u2s9n8gf0i9k@group.calendar.google.com'},
     {id:'course',title:'課務組長',calendarId:'bkchang@g.ncu.edu.tw',email:'bkchang@g.ncu.edu.tw'},
     {id:'development',title:'教發中心主任',calendarId:'ziyang.ccu@gmail.com',email:'ziyang.ccu@gmail.com'},
-    {id:'admissions',title:'招生組長',calendarId:'takee1016@gmail.com',email:'takee1016@gmail.com'},
+    {id:'admissions',title:'招生組長',calendarId:'yswadmission@gmail.com',email:'yswadmission@gmail.com'},
   ],
 };
 
