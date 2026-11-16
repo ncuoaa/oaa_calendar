@@ -10,6 +10,7 @@ const DEFAULT_CONFIG_ = {
     '含各組主管與會的行程確認及建檔，必須洽：秘書(57101)。',
   ],
   people: [
+    {id:'vice_president_chen',title:'陳副校長',calendarId:'oaancu2017@gmail.com',email:'oaancu2017@gmail.com'},
     {id:'dean',title:'教務長',calendarId:'deanoaa2018@gmail.com',email:'deanoaa2018@gmail.com'},
     {id:'deputy',title:'副教務長',calendarId:'oaancu2017@gmail.com',email:'oaancu2017@gmail.com'},
     {id:'registrar',title:'註冊組長',calendarId:'uk56hs13bgj775u2s9n8gf0i9k@group.calendar.google.com',email:'uk56hs13bgj775u2s9n8gf0i9k@group.calendar.google.com'},

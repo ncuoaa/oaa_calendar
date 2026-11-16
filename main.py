@@ -21,6 +21,7 @@ from access_auth import login, logout, require_session
 TZ = ZoneInfo("Asia/Taipei")
 SCOPES = ["https://www.googleapis.com/auth/calendar.freebusy"]
 PEOPLE = {
+    "vice_president_chen": {"title": "陳副校長", "calendar_id": "oaancu2017@gmail.com", "email": "oaancu2017@gmail.com"},
     "dean": {"title": "教務長", "calendar_id": "deanoaa2018@gmail.com", "email": "deanoaa2018@gmail.com"},
     "deputy": {"title": "副教務長", "calendar_id": "oaancu2017@gmail.com", "email": "oaancu2017@gmail.com"},
     "registrar": {"title": "註冊組長", "calendar_id": "uk56hs13bgj775u2s9n8gf0i9k@group.calendar.google.com", "email": "uk56hs13bgj775u2s9n8gf0i9k@group.calendar.google.com"},
