@@ -37,11 +37,12 @@ upstream={calendars:{'deanoaa2018@gmail.com':{busy:[{start:'2026-12-01T00:00:00Z
 let response=context.apiAvailability({token,criteria:base});
 assert.equal(response.status,'success');assert.deepEqual([...response.rows[0].slots],['13:00–17:00']);
 assert.equal(response.rows[0].accounts.length,2);
-const sharedRoleCriteria={...base,selected:['vice_president_chen','deputy']};
-const sharedRoleResponse=context.apiAvailability({token,criteria:sharedRoleCriteria});
-assert.equal(sharedRoleResponse.status,'success');
-assert.deepEqual([...sharedRoleResponse.rows[0].slots],['13:00–17:00'],'Roles sharing one calendar must retain the same busy intervals');
-assert.deepEqual([...sharedRoleResponse.rows[0].accounts].map(p=>p.title),['陳副校長','副教務長']);
+upstream.calendars['ncuvp57007@gmail.com']={busy:[{start:'2026-12-01T08:00:00+08:00',end:'2026-12-01T14:00:00+08:00'}]};
+const vicePresidentCriteria={...base,selected:['vice_president_chen','deputy'],minimumMinutes:180};
+const vicePresidentResponse=context.apiAvailability({token,criteria:vicePresidentCriteria});
+assert.equal(vicePresidentResponse.status,'success');
+assert.deepEqual([...vicePresidentResponse.rows[0].slots],['14:00–17:00'],'Vice president queries must include the corrected calendar busy intervals');
+assert.deepEqual([...vicePresidentResponse.rows[0].accounts].map(p=>p.title),['陳副校長','副教務長']);
 upstream.calendars['oaancu2017@gmail.com']={errors:[{reason:'notFound'}]};
 assert.equal(context.apiAvailability({token,criteria:base}).code,424,'Calendar errors must fail closed');
 delete upstream.calendars['oaancu2017@gmail.com'];
