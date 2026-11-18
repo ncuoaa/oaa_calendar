@@ -19,9 +19,9 @@ for (const name of ['apps-script/Index.html', 'static/availability.html']) {
   const rows=[{date:'2026-11-18',weekday:'三',slots:['08:00–10:00','14:00–17:00'],
     accounts:[{title:'測試主管甲',email:'one@example.com'},{title:'測試主管乙',email:'two@example.com'}],note:'不應匯出此備註'}];
   const csv=context.buildResultsCsv(rows);
-  assert.equal(csv,'\uFEFF"日期","星期","共同空檔","比對帳號"\r\n"2026/11/18","週三","08:00–10:00, 14:00–17:00","one@example.com, two@example.com"\r\n');
-  const quoted=context.buildResultsCsv([{...rows[0],accounts:[{email:'name"quoted@example.com'}]}]);
-  assert.ok(quoted.includes('"name""quoted@example.com"'));
+  assert.equal(csv,'\uFEFF"日期","星期","共同空檔","比對主管"\r\n"2026/11/18","週三","08:00–10:00, 14:00–17:00","測試主管甲, 測試主管乙"\r\n');
+  const quoted=context.buildResultsCsv([{...rows[0],accounts:[{title:'測試"主管',email:'unused@example.com'}]}]);
+  assert.ok(quoted.includes('"測試""主管"'));
   const button=elements.get('#downloadResults');
   assert.equal(button.disabled,true,'No download before a successful query');
   context.renderRows(rows);assert.equal(button.disabled,false);

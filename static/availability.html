@@ -39,9 +39,9 @@ let queryRevision=0;
 function clearDownload(){queryRevision++;downloadableRows=[];$('#downloadResults').disabled=true}
 function buildResultsCsv(rows){
   const quote=value=>'"'+String(value).replace(/"/g,'""')+'"';
-  const records=[['日期','星期','共同空檔','比對帳號'],...rows.map(row=>{
+  const records=[['日期','星期','共同空檔','比對主管'],...rows.map(row=>{
     const [y,m,d]=row.date.split('-');
-    return [`${y}/${Number(m)}/${Number(d)}`,`週${row.weekday}`,row.slots.join(', '),row.accounts.map(account=>account.email).join(', ')];
+    return [`${y}/${Number(m)}/${Number(d)}`,`週${row.weekday}`,row.slots.join(', '),row.accounts.map(account=>account.title).join(', ')];
   })];
   return '\uFEFF'+records.map(record=>record.map(quote).join(',')).join('\r\n')+'\r\n';
 }
